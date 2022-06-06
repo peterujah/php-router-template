@@ -157,7 +157,7 @@ class TemplateHelper {
 
     /** 
     * Fixes the broken css,image & links when added additional slash(/) at the router link
-    * The function will add the aparioprate relative base based on how many invalid link detected.
+    * The function will add the appropriate relative base based on how many invalid link detected.
     * @param int $deep the directory location dept from base directory index.php/fee(1) index.php/foo/bar(2)
     * @return string|path relative path 
     */
