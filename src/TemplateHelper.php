@@ -64,11 +64,11 @@ class TemplateHelper {
     }
 
     /** 
-    * Builds the template full path
+    * Renders the template full path
     * @param string $file the file name
     * @return TemplateHelper|object $this
     */
-    public function Build($file): TemplateHelper {
+    public function Render($file): TemplateHelper {
         $this->file =  $this->dir . "/router/{$file}.php";
         return $this;
     }
@@ -136,7 +136,7 @@ class TemplateHelper {
     * @param string|path $base app root directory
     * @param array $options additional parameters to pass in the template file
     */
-    public function root($base, $options = []) {
+    public function with($base, $options = []) {
         $root =  ($this->debug ? $base : "/");
         $self = $options??[];
         $user = $this->user;
@@ -145,6 +145,16 @@ class TemplateHelper {
         $config = $this->config;
         $ALLOW_ACCESS = true;
         require_once $this->file;
+    }
+
+    /** 
+    * Shorthand to Creates and Render template by including the accessible global variable within the template file.
+    * @param int $deep the directory location dept
+    * @param array $options additional parameters to pass in the template file
+    */
+
+    public function withDept($deep, $options = []) {
+        $this->with($this->deep($deep), $options);
     }
 
     /** 
@@ -161,7 +171,7 @@ class TemplateHelper {
     * @param int $deep the directory location dept from base directory index.php/fee(1) index.php/foo/bar(2)
     * @return string|path relative path 
     */
-    public function fixSlash($deep = 1){
+    public function deep($deep = 1){
         $this->uri = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         if(substr($this->uri, -1) == "/"){
             $slash = explode("/", $this->uri);
