@@ -74,7 +74,7 @@ $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
 });
 ```
 
-Accessing all global variables within a template file `product.php`.
+Accessing all global variables within a template file `/router/product.php`.
 
 ```php
 <?php 
