@@ -1,7 +1,7 @@
 {
     "name": "peterujah/php-router-templete-helper",
     "type": "library",
-    "description": "Php User session class.",
+    "description": "A simple php class to help render template in routers and fix additional slash issue.",
     "homepage": "https://github.com/peterujah/php-router-templete-helper",
     "keywords": [
         "library",
