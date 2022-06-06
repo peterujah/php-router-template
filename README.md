@@ -1,5 +1,20 @@
 # php-router-templete-helper
 
+A simple php class to help render template in routers and fix additional slash issue.
+
+#IMPORTANT
+
+You do not have to install, download nor use this class, i wrote the class for my personal needs, the first time i starting using router in my project instead of old ways. The only important the about this class is `deep` method which fixed the issue with extra shlash as posted on stackoverflow question here [style disappear when i add slash / after route](https://stackoverflow.com/questions/64298425/style-disappear-when-i-add-slash-after-route)
+
+And making it easy for me to access any defined global variables within the template since am not using any php framework.
+So please just ignore the project, even though i have claerly documented the class and showed usage sample, it because i like wasing my time on beautiful usles codes and likes to wrap all my ever writing functions is a class because i might need it again. What about composer installation? Yah i know, it free so i used.
+
+
+Installation is super-easy via Composer:
+```md
+composer require peterujah/php-router-templete-helper
+```
+
 # USAGES
 
 Initialize TemplateHelper with the necessary parameters and register your custom classes.
