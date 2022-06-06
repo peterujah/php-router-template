@@ -2,7 +2,7 @@
 
 A simple php class to help render template in routers and fix additional slash issue.
 
-#IMPORTANT
+### IMPORTANT
 
 You do not have to install, download nor use this class, i wrote the class for my personal needs, the first time i starting using router in my project instead of old ways. The only important the about this class is `deep` method which fixed the issue with extra shlash as posted on stackoverflow question here [style disappear when i add slash / after route](https://stackoverflow.com/questions/64298425/style-disappear-when-i-add-slash-after-route)
 
