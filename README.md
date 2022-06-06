@@ -31,7 +31,7 @@ $template->Render("home")->with($template->deep(1));
 
 A shorthand to the above method should be using `withDept` method and only passing the directory dept integer as the first parameter while optional options array will be the second parameter.
 ```php
-$template->Render("home")->withDept(1);
+$template->Render("home")->view(1);
 ```
 
 Using the class with [Bramus Router](https://github.com/bramus/router) or any other php router as you wish. Initialize your router instance
@@ -49,14 +49,14 @@ $router->get('/', function() use ($template) {
 Render hompage template using `withDept` method.
 ```php
 $router->get('/', function() use ($template) {
-    $template->Build("home")->withDept(1);
+    $template->Build("home")->view(1);
 });
 ```
 
 Render update product template with product id as the second url parameter.
 ```php
 $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
-    $template->Build("product")->withDept(2);
+    $template->Build("product")->view(2);
     /*
       Using with method below
       $template->Build("product")->with($template->deep(2));
@@ -67,7 +67,7 @@ $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
 Render update product template with product id as second url parameter and passing additional options to the template.
 ```php
 $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
-    $template->Build("product")->withDept(2, [
+    $template->Build("product")->view(2, [
       "foo" => "Our Foo"
       "bar" => "Our Bar id {$id}"
     ]);
