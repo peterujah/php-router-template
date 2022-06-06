@@ -46,7 +46,7 @@ $router->get('/', function() use ($template) {
 });
 ```
 
-Render hompage template using `withDept` method.
+Render hompage template using `view` method.
 ```php
 $router->get('/', function() use ($template) {
     $template->Build("home")->view(1);
