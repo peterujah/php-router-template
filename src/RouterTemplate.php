@@ -140,11 +140,11 @@ class RouterTemplate {
     }
 
     /** 
-    * Shorthand to Creates and Render template by including the accessible global variable within the template file.
+    * Shorthand to build and Render template by including the accessible global variable within the template file.
     * @param int $deep the directory location dept
     * @param array $options additional parameters to pass in the template file
     */
-    public function withDept($deep, $options = []) {
+    public function view($deep, $options = []) {
         $this->with($this->deep($deep), $options);
     }
 
