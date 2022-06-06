@@ -27,5 +27,6 @@
         "psr-4": { 
             "Peterujah\\NanoBlock\\": "src/" 
         }
-    }
+    },
+    "prefer-stable": true
 }
