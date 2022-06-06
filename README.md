@@ -1,4 +1,4 @@
-# php-router-templete-helper
+# php-router-templete
 
 A simple php class to help render template in routers and fix additional slash issue.
 
@@ -12,15 +12,15 @@ So please just ignore the project, even though i have claerly documented the cla
 
 Installation is super-easy via Composer:
 ```md
-composer require peterujah/php-router-templete-helper
+composer require peterujah/php-router-templete
 ```
 
 # USAGES
 
-Initialize TemplateHelper with the necessary parameters and register your custom classes.
+Initialize RouterTemplate with the necessary parameters and register your custom classes.
 
 ```php 
-$template = new \Peterujah\NanoBlock\TemplateHelper(__DIR__, true);
+$template = new \Peterujah\NanoBlock\RouterTemplate(__DIR__, true);
 $template->addUser(new User(User::LIVE))->addFunc(new Functions())->addConfig(new Config());
 ```
 
