@@ -19,7 +19,7 @@ A shorthand to the above method should be using `withDept` method and only passi
 $template->Render("home")->withDept(1);
 ```
 
-Using the class with [Bramus Router](https://github.com/bramus/router). Initialize your router instance
+Using the class with [Bramus Router](https://github.com/bramus/router) or any other php router as you wish. Initialize your router instance
 ```php 
 $router = new \Bramus\Router\Router();
 ```
