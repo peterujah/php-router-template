@@ -8,10 +8,10 @@
 namespace Peterujah\NanoBlock;
 
 /**
- * Class TemplateHelper.
+ * Class RouterTemplate.
  **/
 
-class TemplateHelper {
+class RouterTemplate {
     /** Holds the project base directory
      * @var string|path|dir $dir __DIR__
     */
@@ -58,16 +58,16 @@ class TemplateHelper {
     /** 
     * Renders the template full path
     * @param string $file the file name
-    * @return TemplateHelper|object $this
+    * @return RouterTemplate|object $this
     */
-    public function Render($file): TemplateHelper {
+    public function Render($file): RouterTemplate {
         $this->file = "{$this->dir}/router/{$file}.php";
         return $this;
     }
 
     /** Register a custom User class to template
     * @param User|object $user the user class object
-    * @return TemplateHelper|object $this
+    * @return RouterTemplate|object $this
     */
     public function addUser($user) {
         if(empty($this->user) && !empty($user)){
@@ -87,7 +87,7 @@ class TemplateHelper {
     /** 
     * Register a custom functions class to template
     * @param Functions|object $func the function class object
-    * @return TemplateHelper|object $this
+    * @return RouterTemplate|object $this
     */
     public function addFunc($func) {
         if(empty($this->func) && !empty($func)){
@@ -106,7 +106,7 @@ class TemplateHelper {
 
     /** Register a custom configuration class to template
     * @param Config|object $config the configuration class object
-    * @return TemplateHelper|object $this
+    * @return RouterTemplate|object $this
     */
     public function addConfig($config) {
         if(empty($this->config) && !empty($config)){
