@@ -6,74 +6,137 @@
  * @license     MIT public license
  */
 namespace Peterujah\NanoBlock;
-//use ;
-//use Peterujah\NanoBlock\Config;
 
 /**
  * Class TemplateHelper.
  **/
 
 class TemplateHelper {
+    /** Holds the project base directory
+     * @var string|path|dir $dir __DIR__
+    */
     private $dir = "";
+
+    /** Holds the requested url
+     * @var string|uri $uri full url
+    */
     public $uri = "";
+
+    /** Holds the debug state
+     * @var bool $debug true 0r false
+    */
     public $debug = false;
+
+    /** Holds the project template file name
+     * @var string $file 
+    */
     private $file = "";
+
+    /** Holds the project user class
+     * @var object|User $user 
+    */
     protected $user; 
+
+    /** Holds the project custom functions class
+     * @var object|Functions $func 
+    */
     protected $func;
+
+    /** Holds the project custom configuration class
+     * @var object|Config $config 
+    */
     protected $config;
+
+    /** 
+    * Initialize class construct
+    */
     public function __construct($dir = "", $debug = false){
         $this->dir = $dir;
         $this->debug = $debug;
         $emptyClass = new stdClass();
         if(class_exists('\Peterujah\NanoBlock\User')){
-          $this->addUser(new \Peterujah\NanoBlock\User(\Peterujah\NanoBlock\User::LIVE));
+            $this->addUser(new \Peterujah\NanoBlock\User(\Peterujah\NanoBlock\User::LIVE));
         }else{
-          $this->addUser($emptyClass);
+            $this->addUser($emptyClass);
         }
         $this->addFunc($emptyClass);
         $this->addConfig($emptyClass);
     }
 
+    /** 
+    * Builds the template full path
+    * @param string $file the file name
+    * @return TemplateHelper|object $this
+    */
     public function Build($file): TemplateHelper {
-        $this->uri = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $this->file =  $this->dir . "/router/{$file}.php";
         return $this;
     }
 
+    /** Register a custom User class to template
+    * @param User|object $user the user class object
+    * @return TemplateHelper|object $this
+    */
     public function addUser($user) {
-      if(empty($this->user) && !empty($user)){
+        if(empty($this->user) && !empty($user)){
          $this->user = $user;
-      }
-      return $this;
+        }
+        return $this;
     }
 
+    /** 
+    * Gets User class object
+    * @return User|object $this->user
+    */
     public function user(): User {
         return $this->user;
     }
 
+    /** 
+    * Register a custom functions class to template
+    * @param Functions|object $func the function class object
+    * @return TemplateHelper|object $this
+    */
     public function addFunc($func) {
-      if(empty($this->func) && !empty($func)){
+        if(empty($this->func) && !empty($func)){
          $this->func = $func;
-      }
-      return $this;
+        }
+        return $this;
     }
 
+    /** 
+    * Gets Function class object
+    * @return Function|object $this->func
+    */
     public function func(): Functions {
         return $this->func;
     }
 
+    /** Register a custom configuration class to template
+    * @param Config|object $config the configuration class object
+    * @return TemplateHelper|object $this
+    */
     public function addConfig($config) {
-      if(empty($this->config) && !empty($config)){
+        if(empty($this->config) && !empty($config)){
          $this->config = $config;
-      }
-      return $this;
+        }
+        return $this;
     }
 
+    /** 
+    * Gets Config class object
+    * @return Config|object $this->config
+    */
     public function config(): Config {
-        return $this->config;
+    return $this->config;
     }
 
-    public function root($base = $this->uri, $options = []) {
+    /** 
+    * Creates and Render template by including the accessible global variable within the template file.
+    * @param string|path $base app root directory
+    * @param array $options additional parameters to pass in the template file
+    */
+    public function root($base, $options = []) {
         $root =  ($this->debug ? $base : "/");
         $self = $options??[];
         $user = $this->user;
@@ -84,11 +147,22 @@ class TemplateHelper {
         require_once $this->file;
     }
 
+    /** 
+    * Render file from template file path
+    * @param string $file the file name
+    */
     public static function create($file){
         require_once $this->dir . "/router/{$file}.php";
     }
 
+    /** 
+    * Fixes the broken css,image & links when added additional slash(/) at the router link
+    * The function will add the aparioprate relative base based on how many invalid link detected.
+    * @param int $deep the directory location dept from base directory index.php/fee(1) index.php/foo/bar(2)
+    * @return string|path relative path 
+    */
     public function fixSlash($deep = 1){
+        $this->uri = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         if(substr($this->uri, -1) == "/"){
             $slash = explode("/", $this->uri);
             if($deep == 1 && $slash[0] == "localhost" && 3 == count($slash)){
