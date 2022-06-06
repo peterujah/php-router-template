@@ -20,7 +20,7 @@ composer require peterujah/php-router-templete
 Initialize RouterTemplate with the necessary parameters and register your custom classes.
 
 ```php 
-$template = new \Peterujah\NanoBlock\RouterTemplate(__DIR__, true);
+$template = new \Peterujah\NanoBlock\RouterTemplate(__DIR__, false);
 $template->addUser(new User(User::LIVE))->addFunc(new Functions())->addConfig(new Config());
 ```
 
