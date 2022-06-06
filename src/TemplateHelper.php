@@ -53,14 +53,6 @@ class TemplateHelper {
     public function __construct($dir = "", $debug = false){
         $this->dir = $dir;
         $this->debug = $debug;
-        $emptyClass = new stdClass();
-        if(class_exists('\Peterujah\NanoBlock\User')){
-            $this->addUser(new \Peterujah\NanoBlock\User(\Peterujah\NanoBlock\User::LIVE));
-        }else{
-            $this->addUser($emptyClass);
-        }
-        $this->addFunc($emptyClass);
-        $this->addConfig($emptyClass);
     }
 
     /** 
@@ -69,7 +61,7 @@ class TemplateHelper {
     * @return TemplateHelper|object $this
     */
     public function Render($file): TemplateHelper {
-        $this->file =  $this->dir . "/router/{$file}.php";
+        $this->file = "{$this->dir}/router/{$file}.php";
         return $this;
     }
 
@@ -152,7 +144,6 @@ class TemplateHelper {
     * @param int $deep the directory location dept
     * @param array $options additional parameters to pass in the template file
     */
-
     public function withDept($deep, $options = []) {
         $this->with($this->deep($deep), $options);
     }
@@ -162,7 +153,7 @@ class TemplateHelper {
     * @param string $file the file name
     */
     public static function create($file){
-        require_once $this->dir . "/router/{$file}.php";
+        require_once "{$this->dir}/router/{$file}.php";
     }
 
     /** 
