@@ -1,8 +1,8 @@
 {
-    "name": "peterujah/php-router-templete-helper",
+    "name": "peterujah/php-router-templete",
     "type": "library",
     "description": "A simple php class to help render template in routers and fix additional slash issue.",
-    "homepage": "https://github.com/peterujah/php-router-templete-helper",
+    "homepage": "https://github.com/peterujah/php-router-templete",
     "keywords": [
         "library",
         "router", 
