@@ -1,0 +1,30 @@
+{
+    "name": "peterujah/php-router-templete-helper",
+    "type": "library",
+    "description": "Php User session class.",
+    "homepage": "https://github.com/peterujah/php-router-templete-helper",
+    "keywords": [
+        "library",
+        "router", 
+        "routing",
+        "template"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ujah Chigozie",
+            "email": "ujahchigozie@gmail.com"
+        }
+    ],
+    "require": {
+         "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "bramus/router": "~1.6" 
+    },
+    "autoload": {
+        "psr-4": { 
+            "Peterujah\\NanoBlock\\": "src/" 
+        }
+    }
+}
