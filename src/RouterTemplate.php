@@ -162,7 +162,7 @@ class RouterTemplate {
     * @param int $deep the directory location dept from base directory index.php/fee(1) index.php/foo/bar(2)
     * @return string|path relative path 
     */
-    public function deep($deep = 1){
+    public function deep($deep = 0){
         $this->uri = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         if(substr($this->uri, -1) == "/"){
             $slash = explode("/", $this->uri);
@@ -171,7 +171,9 @@ class RouterTemplate {
             }
             $total = array_count_values($slash);
             return str_repeat("../", $total['']??0);
+        }else if($deep >= 2){
+            return str_repeat("../", $deep);
         }
-        return ($deep == 2 ? "." : "") . "./";
+        return ($deep > 0 ? "../" : "./");
     }
 }
