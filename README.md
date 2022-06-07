@@ -42,24 +42,24 @@ $router = new \Bramus\Router\Router();
 Render hompage template using `with` and `deep` method.
 ```php
 $router->get('/', function() use ($template) {
-    $template->Build("home")->with($template->deep(1));
+    $template->Build("home")->with($template->deep(0));
 });
 ```
 
 Render hompage template using `view` method.
 ```php
 $router->get('/', function() use ($template) {
-    $template->Build("home")->view(1);
+    $template->Build("home")->view(0);
 });
 ```
 
 Render update product template with product id as the second url parameter.
 ```php
 $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
-    $template->Build("product")->view(2);
+    $template->Build("product")->view(1);
     /*
       Using with method below
-      $template->Build("product")->with($template->deep(2));
+      $template->Build("product")->with($template->deep(1));
     */
 });
 ```
@@ -67,7 +67,7 @@ $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
 Render update product template with product id as second url parameter and passing additional options to the template.
 ```php
 $router->get('/update/([a-zA-Z0-9]+)', function($id) use ($template) {
-    $template->Build("product")->view(2, [
+    $template->Build("product")->view(1, [
       "foo" => "Our Foo"
       "bar" => "Our Bar id {$id}"
     ]);
