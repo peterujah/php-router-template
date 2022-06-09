@@ -32,6 +32,11 @@ class RouterTemplate {
     */
     private $file = "";
 
+    /** Holds the project template file directory path
+     * @var string $file 
+    */
+    private $templateDir = "router";
+
     /** Holds the project user class
      * @var object|User $user 
     */
@@ -53,8 +58,18 @@ class RouterTemplate {
     public function __construct($dir = "", $debug = false){
         $this->dir = $dir;
         $this->debug = $debug;
+        $this->setTemplatePath("router");
     }
 
+    /** 
+    * Set the template directory path
+    * @param string $path the file path directory
+    * @return RouterTemplate|object $this
+    */
+    public function setTemplatePath($path){
+        $this->templateDir = trim( $path, "/" );
+        return $this;
+    }
     /** 
     * Renders the template full path
     * @param string $file the file name
@@ -153,7 +168,7 @@ class RouterTemplate {
     * @param string $file the file name
     */
     public static function create($file){
-        require_once "{$this->dir}/router/{$file}.php";
+        require_once "{$this->dir}/{$this->templateDir}/{$file}.php";
     }
 
     /** 
