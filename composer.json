@@ -1,5 +1,5 @@
 {
-    "name": "peterujah/php-router-templete",
+    "name": "peterujah/php-router-template",
     "type": "library",
     "description": "A simple php class to help render template in routers and fix additional slash issue.",
     "homepage": "https://github.com/peterujah/php-router-templete",
