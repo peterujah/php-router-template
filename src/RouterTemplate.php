@@ -150,7 +150,7 @@ class RouterTemplate {
         $person = $this->user->instance();
         $func = $this->func;
         $config = $this->config;
-        $ALLOW_ACCESS = true;
+        define("ALLOW_ACCESS", true);
         require_once $this->file;
     }
 
