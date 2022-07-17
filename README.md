@@ -1,4 +1,4 @@
-# php-router-templete
+# php-router-template
 
 A simple php class to help render template in routers and fix additional slash issue.
 
