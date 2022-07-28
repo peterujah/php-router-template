@@ -32,6 +32,11 @@ class RouterTemplate {
     */
     private $file = "";
 
+    /** Holds the router active page name
+     * @var string $activePage 
+    */
+    private $activePage = "";
+
     /** Holds the project template file directory path
      * @var string $file 
     */
@@ -76,6 +81,7 @@ class RouterTemplate {
     * @return RouterTemplate|object $this
     */
     public function Render($file): RouterTemplate {
+        $this->activePage = $file;
         $this->file = "{$this->dir}/router/{$file}.php";
         return $this;
     }
@@ -146,6 +152,9 @@ class RouterTemplate {
     public function with($base, $options = []) {
         $root =  ($this->debug ? $base : "/");
         $self = $options??[];
+        if(empty($self["active"])){
+            $self["active"] = $this->activePage;
+        }
         $user = $this->user;
         $person = $this->user->instance();
         $func = $this->func;
