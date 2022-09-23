@@ -42,20 +42,21 @@ class RouterTemplate {
     */
     private $templateDir = "router";
 
-    /** Holds the project user class
-     * @var object|User $user 
-    */
-    protected $user; 
-
-    /** Holds the project custom functions class
-     * @var object|Functions $func 
-    */
-    protected $func;
-
-    /** Holds the project custom configuration class
+    /** Holds the array classes
      * @var object|Config $config 
     */
-    protected $config;
+
+    protected $classMapper = array();
+
+    /** Holds template assets folder
+     * @var object|Config $config 
+    */
+    public $assetsFolder = "assets/";
+
+    /** Holds template project root
+     * @var object|Config $config 
+    */
+    private $projectRoot = "";
 
     /** 
     * Initialize class construct
@@ -81,8 +82,8 @@ class RouterTemplate {
     * @return RouterTemplate|object $this
     */
     public function Render($file): RouterTemplate {
-        $this->activePage = $file;
         $this->file = "{$this->dir}/router/{$file}.php";
+        $this->activePage = $file;
         return $this;
     }
 
@@ -91,38 +92,21 @@ class RouterTemplate {
     * @return RouterTemplate|object $this
     */
     public function addUser($user) {
-        if(empty($this->user) && !empty($user)){
-         $this->user = $user;
+        if(empty($this->newClass("user")) && !empty($user)){
+          $this->addClass("user", $user);
         }
         return $this;
     }
-
-    /** 
-    * Gets User class object
-    * @return User|object $this->user
-    */
-    public function user(): User {
-        return $this->user;
-    }
-
     /** 
     * Register a custom functions class to template
     * @param Functions|object $func the function class object
     * @return RouterTemplate|object $this
     */
     public function addFunc($func) {
-        if(empty($this->func) && !empty($func)){
-         $this->func = $func;
+        if(empty($this->newClass("func")) && !empty($func)){
+            $this->addClass("func", $func);
         }
         return $this;
-    }
-
-    /** 
-    * Gets Function class object
-    * @return Function|object $this->func
-    */
-    public function func(): Functions {
-        return $this->func;
     }
 
     /** Register a custom configuration class to template
@@ -130,18 +114,55 @@ class RouterTemplate {
     * @return RouterTemplate|object $this
     */
     public function addConfig($config) {
-        if(empty($this->config) && !empty($config)){
-         $this->config = $config;
+        if(empty($this->newClass("config")) && !empty($config)){
+            $this->addClass("config", $config);
         }
         return $this;
     }
 
-    /** 
-    * Gets Config class object
-    * @return Config|object $this->config
+    /** Register a custom configuration class to template
+    * @param SettingManager|object $config the configuration class object
+    * @return RouterTemplate|object $this
     */
-    public function config(): Config {
-    return $this->config;
+    public function addSettings($settings) {
+        if(empty($this->newClass("settings")) && !empty($settings)){
+            $this->addClass("settings", $settings);
+        }
+        return $this;
+    }
+
+
+    /** 
+     * Register a class instance to template
+    * @param String $name the class name/identifier
+    * @param Class|Object $class class instance
+    * @return RouterTemplate|object $this
+    */
+    function addClass($name, $class){
+        if(empty($name) or empty($class)){
+            trigger_error("Invalid class mapper exception");
+        }
+        $this->classMapper[$name] = $class;
+        return $this;
+    }
+    
+    /** 
+     * Initialize class instance by name
+    * @param String $name the class name/identifier
+    * @return Object $classInstance
+    */
+    public function newClass($name) {
+        return $this->classMapper[$name]??null;
+    }
+
+    /** 
+     * Set router base root
+    * @param String $root base directory
+    * @return RouterTemplate|object $this
+    */
+    public function setRoot($root) {
+        $this->projectRoot = $root;
+        return $this;
     }
 
     /** 
@@ -149,17 +170,26 @@ class RouterTemplate {
     * @param string|path $base app root directory
     * @param array $options additional parameters to pass in the template file
     */
-    public function with($base, $options = []) {
-        $root =  ($this->debug ? $base : "/");
+    public function with($base_dir, $options = []) {
+        $root =  ($this->debug ? $base_dir : "/");
+        $base =  ($root . $this->projectRoot);
         $self = $options??[];
         if(empty($self["active"])){
             $self["active"] = $this->activePage;
         }
-        $user = $this->user;
-        $person = $this->user->instance();
-        $func = $this->func;
-        $config = $this->config;
-        define("ALLOW_ACCESS", true);
+        $user = $this->newClass("user");
+        $func = $this->newClass("func");
+        $config = $this->newClass("config");
+        $settings = $this->newClass("settings");
+        if (!defined('ALLOW_ACCESS')){
+            define("ALLOW_ACCESS", true);
+        }
+        if (!defined('ASSETS')){
+            define("ASSETS", "{$root}{$this->assetsFolder}");
+        }
+        if (!defined('BASE_ASSETS')){
+            define("BASE_ASSETS", "{$base}{$this->assetsFolder}");
+        }
         require_once $this->file;
     }
 
