@@ -58,6 +58,12 @@ class RouterTemplate {
     */
     private $projectRoot = "";
 
+    /**
+     * Object registered with this server
+     */
+    protected $object;
+
+
     /** 
     * Initialize class construct
     */
@@ -139,8 +145,21 @@ class RouterTemplate {
     * @return RouterTemplate|object $this
     */
     function addClass($name, $class){
-        if(empty($name) or empty($class)){
+        /*if(empty($name) or empty($class)){
             trigger_error("Invalid class mapper exception");
+        }*/
+        if (empty($name) OR !is_string($name)) {
+            throw new \Exception(sprintf(
+                'Invalid class name (%s)',
+                gettype($name)
+            ));
+        }
+
+        if (empty($class) OR !is_object($class)) {
+            throw new \Exception(sprintf(
+                'Invalid class argument (%s)',
+                gettype($class)
+            ));
         }
         $this->classMapper[$name] = $class;
         return $this;
@@ -163,6 +182,41 @@ class RouterTemplate {
     public function setRoot($root) {
         $this->projectRoot = $root;
         return $this;
+    }
+
+     /**
+     * Attach an object to a server
+     *
+     * Accepts an instantiated object to use when handling requests.
+     *
+     * @param  object $object
+     * @return self
+     * @throws Exception
+     */
+    public function setObject($object){
+        if (empty($object) OR !is_object($object)) {
+            throw new \Exception(sprintf(
+                'Invalid object argument (%s)',
+                gettype($object)
+            ));
+        }
+
+        if (isset($this->object)) {
+            throw new \Exception(
+                'An object has already been registered with this soap server instance'
+            );
+        }
+
+        $this->object = $object;
+        return $this;
+    }
+
+    /** 
+     * Get object instance
+    * @return Object
+    */
+    public function getObject(){
+        return ($this->object??(object)[]);
     }
 
     /** 
